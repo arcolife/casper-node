@@ -29,13 +29,13 @@ secret_key_path = 'secret_keys/node-1.pem'
 #
 # If it is the same as that in `root_addr` and the `bind_port` is non-zero and the same as that in
 # `root_addr`, attempt to become the root node for this particular small network.
-bind_interface = 'node-rs-1'
+bind_interface = '0.0.0.0'
 
 # Port to bind to when not the root node.  Use 0 for a random port.
 bind_port = 34553
 
 # Address to connect to join the network.
-root_addr = 'node-rs-1:34553'
+root_addr = '0.0.0.0:34553'
 
 # Optional path to certificate file.
 #cert_path = 'path/to/certificate'

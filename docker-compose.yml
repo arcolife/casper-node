@@ -43,8 +43,8 @@ services:
       - casperlabs
     environment:
       HOME: /root
-      ROOT_ADDR: node-rs-1:34553
-      BIND_INTERFACE: node-rs-1
+      ROOT_ADDR: 0.0.0.0:34553
+      BIND_INTERFACE: 0.0.0.0
       BIND_PORT: 34553
     env_file:
       - .env
@@ -82,8 +82,8 @@ services:
       - casperlabs
     environment:
       HOME: /root
-      ROOT_ADDR: 172.18.0.2:34553
-      BIND_INTERFACE: node-rs-1
+      ROOT_ADDR: 0.0.0.0:34553
+      BIND_INTERFACE: 0.0.0.0
       BIND_PORT: 40404
     env_file:
       - .env
