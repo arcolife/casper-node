@@ -1,0 +1,15 @@
+apiVersion: v1
+data:
+  BIND_PORT: "40403"
+  CL_VERSION: 0.1.0
+  CONFIG: /root/casperlabs-node/resources/local/config.toml
+  NODE_NUMBER: "0"
+  ROOT_ADDR: node-rs-0:34553
+  RUST_BACKTRACE: full
+  RUST_LOG: debug
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  labels:
+    io.kompose.service: node-1-env
+  name: env

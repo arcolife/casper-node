@@ -1,0 +1,65 @@
+version: "3"
+
+networks:
+  # Create an explicit network so we can connect to it from the client to do deployments.
+  # Create it externally so when we remove individual nodes it doesn't try to destroy it.
+  casperlabs:
+    external: true
+
+volumes:
+  socketvolume: {}
+
+services:
+  node-1:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: casperlabs-node/node-rs:${CL_VERSION}
+    container_name: node-rs-1
+    hostname: node-rs-1
+    ports:
+      # Port for root node
+      - 34553:34553
+    volumes:
+      # config and chainspec
+      - ${PWD}/resources/local/config-1.toml:/root/casperlabs-node/resources/local/config.toml
+      - ${PWD}/resources/local/chainspec.toml:/root/casperlabs-node/resources/local/chainspec.toml
+      - ${PWD}/resources/local/accounts.csv:/root/casperlabs-node/resources/local/accounts.csv
+      - ${PWD}/resources/local/secret_keys/node-1.pem:/root/casperlabs-node/resources/local/secret_keys/node-1.pem
+    networks:
+      - casperlabs
+    environment:
+      HOME: /root
+      ROOT_ADDR: node-rs-1:34553
+      BIND_INTERFACE: node-rs-1
+      BIND_PORT: 34553
+    env_file:
+      - .env
+    # entrypoint: sh -c "RUST_BACKTRACE=full RUST_LOG=debug casperlabs-node validator -C=validator_net.root_addr=$ROOT_ADDR -C=validator_net.bind_interface=$BIND_INTERFACE -C=validator_net.bind_port=$BIND_PORT"
+
+  node-2:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: casperlabs-node/node-rs:${CL_VERSION}
+    container_name: node-rs-2
+    hostname: node-rs-2
+    ports:
+      # Port for root node
+      - 40403:40403
+    volumes:
+      # config and chainspec
+      - ${PWD}/resources/local/config-2.toml:/root/casperlabs-node/resources/local/config.toml
+      - ${PWD}/resources/local/chainspec.toml:/root/casperlabs-node/resources/local/chainspec.toml
+      - ${PWD}/resources/local/accounts.csv:/root/casperlabs-node/resources/local/accounts.csv
+      - ${PWD}/resources/local/secret_keys/node-2.pem:/root/casperlabs-node/resources/local/secret_keys/node-2.pem
+    networks:
+      - casperlabs
+    environment:
+      HOME: /root
+      ROOT_ADDR: node-rs-1:34553
+      BIND_INTERFACE: node-rs-2
+      BIND_PORT: 40403
+    env_file:
+      - .env
+    # entrypoint: sh -c "RUST_BACKTRACE=full RUST_LOG=debug casperlabs-node validator -C=validator_net.root_addr=$ROOT_ADDR -C=validator_net.bind_interface=$BIND_INTERFACE -C=validator_net.bind_port=$BIND_PORT"

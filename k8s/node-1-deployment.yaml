@@ -1,0 +1,100 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f docker-compose-2.yml
+    kompose.version: 1.21.0 (992df58d8)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: node-1
+  name: node-1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: node-1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert -f docker-compose-2.yml
+        kompose.version: 1.21.0 (992df58d8)
+      creationTimestamp: null
+      labels:
+        io.kompose.network/casperlabs: "true"
+        io.kompose.service: node-1
+    spec:
+      containers:
+      - env:
+        - name: BIND_INTERFACE
+          value: node-rs-1
+        - name: BIND_PORT
+          valueFrom:
+            configMapKeyRef:
+              key: BIND_PORT
+              name: env
+        - name: CL_VERSION
+          valueFrom:
+            configMapKeyRef:
+              key: CL_VERSION
+              name: env
+        - name: CONFIG
+          valueFrom:
+            configMapKeyRef:
+              key: CONFIG
+              name: env
+        - name: HOME
+          value: /root
+        - name: NODE_NUMBER
+          valueFrom:
+            configMapKeyRef:
+              key: NODE_NUMBER
+              name: env
+        - name: ROOT_ADDR
+          valueFrom:
+            configMapKeyRef:
+              key: ROOT_ADDR
+              name: env
+        - name: RUST_BACKTRACE
+          valueFrom:
+            configMapKeyRef:
+              key: RUST_BACKTRACE
+              name: env
+        - name: RUST_LOG
+          valueFrom:
+            configMapKeyRef:
+              key: RUST_LOG
+              name: env
+        image: 'casperlabs-node/node-rs:'
+        imagePullPolicy: ""
+        name: node-rs-1
+        ports:
+        - containerPort: 34553
+        resources: {}
+        volumeMounts:
+        - mountPath: /root/casperlabs-node/resources/local/config.toml
+          name: node-1-claim0
+        - mountPath: /root/casperlabs-node/resources/local/chainspec.toml
+          name: node-1-claim1
+        - mountPath: /root/casperlabs-node/resources/local/accounts.csv
+          name: node-1-claim2
+        - mountPath: /root/casperlabs-node/resources/local/secret_keys/node-1.pem
+          name: node-1-claim3
+      hostname: node-rs-1
+      restartPolicy: Always
+      serviceAccountName: ""
+      volumes:
+      - name: node-1-claim0
+        persistentVolumeClaim:
+          claimName: node-1-claim0
+      - name: node-1-claim1
+        persistentVolumeClaim:
+          claimName: node-1-claim1
+      - name: node-1-claim2
+        persistentVolumeClaim:
+          claimName: node-1-claim2
+      - name: node-1-claim3
+        persistentVolumeClaim:
+          claimName: node-1-claim3
+status: {}

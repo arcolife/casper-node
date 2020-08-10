@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f docker-compose-2.yml
+    kompose.version: 1.21.0 (992df58d8)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: node-1
+  name: node-1
+spec:
+  ports:
+  - name: "34553"
+    port: 34553
+    targetPort: 34553
+  selector:
+    io.kompose.service: node-1
+status:
+  loadBalancer: {}
