@@ -55,8 +55,6 @@ services:
     container_name: node-rs-2
     hostname: node-rs-2
     ports:
-      # Port for root node
-      # - 34553:34553
       # bind port
       - 40404:40404
     volumes:
@@ -82,7 +80,43 @@ services:
       - casperlabs
     environment:
       HOME: /root
-      ROOT_ADDR: 0.0.0.0:34553
+      ROOT_ADDR: 172.18.0.2:34553
+      BIND_INTERFACE: 0.0.0.0
+      BIND_PORT: 40404
+    env_file:
+      - .env
+
+  node-3:
+    image: casperlabs-node/node-rs:${CL_VERSION}
+    container_name: node-rs-3
+    hostname: node-rs-3
+    ports:
+      # bind port
+      - 40405:40404
+    volumes:
+      # config and chainspec
+      - type: bind
+        source: ${PWD}/resources/local/config-3.toml
+        target: /root/casperlabs-node/resources/local/config.toml
+        read_only: true
+      - type: bind
+        source: ${PWD}/resources/local/chainspec.toml
+        target: /root/casperlabs-node/resources/local/chainspec.toml
+        read_only: true
+      - type: bind
+        source: ${PWD}/resources/local/accounts.csv
+        target: /root/casperlabs-node/resources/local/accounts.csv
+        read_only: true
+      # node keys
+      - type: bind
+        source: ${PWD}/resources/local/secret_keys/node-3.pem
+        target: /root/casperlabs-node/resources/local/secret_keys/node-3.pem
+        read_only: true
+    networks:
+      - casperlabs
+    environment:
+      HOME: /root
+      ROOT_ADDR: 172.18.0.2:34553
       BIND_INTERFACE: 0.0.0.0
       BIND_PORT: 40404
     env_file:

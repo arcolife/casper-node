@@ -18,11 +18,11 @@ COPY --from=builder /root/casperlabs-node/target /root/casperlabs-node/target
 # COPY resources /root/casperlabs-node/resources
 RUN for exec_bin in `find /root/casperlabs-node/target/release -maxdepth 1 -executable -type f`; do mv $exec_bin /usr/bin/; done
 RUN rm -rf /root/casperlabs-node/target/release
+EXPOSE 34553
+EXPOSE 40404
 # ARG BIND_PORT
 # ENV BIND_PORT=${BIND_PORT}
 # EXPOSE ${BIND_PORT}
-EXPOSE 34553
-
 COPY docker-entrypoint.sh /
 RUN chmod +x /docker-entrypoint.sh
 ENTRYPOINT ["/docker-entrypoint.sh"]
