@@ -87,6 +87,17 @@ There is a [shell script](run-dev.sh) which automates the process of running mul
 
 Note that running multiple nodes on a single machine is normally only recommended for test purposes.
 
+### Containerized Setup
+
+Add a file `.env` in project folder. An example is available under `env.example`.
+
+Build and run docker image:
+```
+docker network create casperlabs
+docker-compose build
+docker-compose up
+```
+
 ## Configuration
 
 In general nodes are configured through a configuration file, typically named `config.toml`.  This
