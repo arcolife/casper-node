@@ -9,6 +9,17 @@ chainspec_config_path = 'chainspec.toml'
 # The maximum number of deploys permitted in a single block.
 block_max_deploy_count = 3
 
+# =================================
+# Configuration options for logging
+# =================================
+[logging]
+
+# Abbreviate module names in text ouptut.
+abbreviate_modules = false
+
+# Output format. Change this to JSON if you want to parse your logs.
+format = "json"
+
 
 # ====================================
 # Configuration options for consensus
@@ -29,13 +40,13 @@ secret_key_path = 'secret_keys/node-3.pem'
 #
 # If it is the same as that in `root_addr` and the `bind_port` is non-zero and the same as that in
 # `root_addr`, attempt to become the root node for this particular small network.
-bind_interface = '0.0.0.0'
+bind_interface = 'node-rs-3'
 
 # Port to bind to when not the root node.  Use 0 for a random port.
 bind_port = 40404
 
 # Address to connect to join the network.
-root_addr = '172.18.0.2:34553'
+root_addr = 'node-rs-1:34553'
 
 # Optional path to certificate file.
 #cert_path = 'path/to/certificate'
@@ -79,7 +90,7 @@ bind_port = 7777
 #   /Users/Alice/Library/Application Support/io.CasperLabs.casperlabs-node
 # * Windows: `{FOLDERID_RoamingAppData}\CasperLabs\casperlabs-node\data` e.g.
 #   C:\Users\Alice\AppData\Roaming\CasperLabs\casperlabs-node\data
-path = '$HOME/.local/share/casperlabs-node/example/'
+path = '/root/.local/share/casperlabs-node/example/'
 
 # Optional maximum size of the database to use for the block store.
 #

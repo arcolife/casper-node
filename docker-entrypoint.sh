@@ -11,7 +11,8 @@ set -e
 #
 # echo $(id)
 
-RUST_BACKTRACE=full RUST_LOG=debug \
+# RUST_LOG=debug
+RUST_BACKTRACE=full \
 	      casperlabs-node validator \
 	      -c=/root/casperlabs-node/resources/local/config.toml
 	      -C=validator_net.root_addr=$ROOT_ADDR \
